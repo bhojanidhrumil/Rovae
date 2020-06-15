@@ -394,41 +394,89 @@
         </div>
         <div class="row justify-content-between">
           <div class="col-lg-6">
-            <form action="#" class="form">
+            <form id="form" target="_self" onsubmit="return postToGoogle();" action="" autocomplete="off" class="form">
               <div class="row mb-4">
                 <div class="form-group col-6">
-                  <input type="text" class="form-control" placeholder="First name">
+                  <input id="nameField" type="text" class="form-control" name="entry.19041660" placeholder="Full name">
                 </div>
-                <div class="form-group col-6">
-                  <input type="text" class="form-control" placeholder="Full name">
-                </div>
+                <!-- <div class="form-group col-6">
+                  <input type="text" class="form-control" name="entry.1863861701" placeholder="Last name">
+                </div> -->
               </div>
-
+  
               <div class="row mb-4">
                 <div class="form-group col-12">
-                  <input type="email" class="form-control" placeholder="Email address">
+                  <input id="emailField" type="email" class="form-control" name="entry.559762834" placeholder="Email address">
                 </div>
               </div>
-
+  
               <div class="row mb-4">
                 <div class="form-group col-12">
-                  <input type="text" class="form-control" placeholder="Subject of the message">
+                  <input id="subField" type="text" class="form-control" name="entry.648591213" placeholder="Subject of the message">
                 </div>
               </div>
-
+  
               <div class="row mb-4">
                 <div class="form-group col-12">
-                  <textarea name="" id="" cols="30" rows="10" class="form-control" placeholder="Type your message here.."></textarea>
+                  <textarea id="msgField" cols="30" rows="10" class="form-control" name="entry.244246707" placeholder="Type your message here.."></textarea>
                 </div>
               </div>
-
+  
               <div class="row">
                 <div class="col-md-6">
-                  <input type="submit" class="btn btn-primary" value="Send Message">
+                  <input type="submit" id="send" class="btn btn-primary" value="Send Message">
                 </div>
               </div>
-
+  
             </form>
+            <h3 id="success-msg" style="text-align: center !important; margin-top:50px !important; display:none; color:#c4e610"> Your Request has been Submited.</h3>
+  
+            <script>
+              function postToGoogle() {
+                              var field1 = $("#nameField").val();
+                              var field2 = $("#emailField").val();
+                              var field3 = $("#subField").val();
+                              var field4 = $("#msgField").text();
+                               
+                              if(field1 == ""){
+                                  alert('Please Fill Your Name');
+                                  document.getElementById("nameField").focus();
+                                  return false;
+                              }
+                              if(field2 == ""){
+                                  alert('Please Fill Your Email');
+                                  document.getElementById("emailField").focus();
+                                  return false;
+                              }
+                              if(field3 == ""){
+                                  alert('Please Fill Your Subject');
+                                  document.getElementById("subField").focus();
+                                  return false;
+                              }
+                              
+              
+                              
+                  
+                              $.ajax({
+                                  url: "https://docs.google.com/forms/u/3/d/e/1FAIpQLScP_t5teju8tmIhIJ19Jk8RgwFqQMLrfehipAvK2031nPHEiA/formResponse?",
+                                  data: {"entry.19041660": field1, "entry.559762834": field2, "entry.648591213": field3, "entry.244246707": field4},
+                                  type: "POST",
+                                  dataType: "xml",
+                                  success: function(d)
+                                  {
+                                  },
+                                  error: function(x, y, z)
+                                      {
+              
+                                          $('#success-msg').show();
+                                          $('#form').hide();
+                                          
+                                      }
+                              });
+                              return false;
+                          }
+              </script>
+  
           </div>
           <div class="col-lg-5">
             <h3>India</h3>
@@ -528,7 +576,7 @@
   <script src="js/jquery.fancybox.min.js"></script>
   <script src="js/jquery.sticky.js"></script>
   <script src="js/isotope.pkgd.min.js"></script>
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
   <script src="js/main.js"></script>
   </body>
